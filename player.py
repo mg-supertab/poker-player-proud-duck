@@ -49,7 +49,7 @@ def get_betting_amount(game_state, rank):
     return our_potential_bet
 
 class Player:
-    VERSION = "0.1"
+    VERSION = "0.2"
 
     def betRequest(self, game_state):
         # rank = rank_hand(get_whole_hans(get_our_cards(game_state), get_table_cards(game_state)))
