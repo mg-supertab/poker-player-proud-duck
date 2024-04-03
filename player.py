@@ -58,12 +58,13 @@ def get_betting_amount(game_state, rank):
     n = randint(0, 100)
 
     if n > 40:
-        our_potential_bet = BETTING_STRATEGY[rank * 2] / 100 * our_stack
+        rank = (rank + 2) if rank + 2 <= 8 else 8
+        our_potential_bet = BETTING_STRATEGY[rank] / 100 * our_stack
     else:
         return our_potential_bet
 
 class Player:
-    VERSION = "0.15"
+    VERSION = "0.16"
 
     def betRequest(self, game_state):
         print("Game state: ", game_state)
