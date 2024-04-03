@@ -22,8 +22,21 @@ def is_four_of_a_kind(ranks):
     counts = Counter(ranks)
     return any(count == 4 for count in counts.values())
 
+def rank_to_numeric(rank):
+    if rank.isdigit():
+        return int(rank)
+    elif rank == 'J':
+        return 11
+    elif rank == 'Q':
+        return 12
+    elif rank == 'K':
+        return 13
+    elif rank == 'A':
+        return 14
+
 def is_straight(ranks):
-    sorted_ranks = sorted([int(rank) for rank in ranks], reverse=True)
+    numeric_ranks = [rank_to_numeric(rank) for rank in ranks]
+    sorted_ranks = sorted(numeric_ranks, reverse=True)
     return sorted_ranks == list(range(sorted_ranks[0], sorted_ranks[0]-5, -1))
 
 def is_flush(suits):
@@ -61,7 +74,9 @@ cards = [
     {"rank": "6", "suit": "diamonds"},
     {"rank": "2", "suit": "diamonds"},
     {"rank": "7", "suit": "spades"},
-    {"rank": "4", "suit": "clubs"}
+    {"rank": "4", "suit": "clubs"},
+    {"rank": "Q", "suit": "clubs"},
+    {"rank": "K", "suit": "hearts"},
 ]
 
 rank_id, first_value = rank_hand(cards)
