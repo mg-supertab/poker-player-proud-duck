@@ -27,6 +27,9 @@ def get_whole_hans(our_cards, table_cards):
 def get_total_number_of_cards(game_state):
     return len(game_state["community_cards"]) + 2
 
+def get_minimum_raise(game_state):
+    return game_state["minimum_raise"]
+
 BETTING_STRATEGY = {
         0: 0,
         1: 10,
@@ -65,10 +68,14 @@ def get_betting_amount(game_state, rank):
     #     our_potential_bet = BETTING_STRATEGY[rank] / 100 * our_stack
     # else:
     #     return our_potential_bet
-    return our_potential_bet
+
+    if our_potential_bet > (get_minimum_raise(game_state) + current_buy_in):
+        return our_potential_bet
+    else:
+        return current_buy_in
 
 class Player:
-    VERSION = "0.19"
+    VERSION = "0.20"
 
     def betRequest(self, game_state):
         print("Game state: ", game_state)
