@@ -1,4 +1,5 @@
 from ranker import rank_hand
+from random import randint
 
 TEAM_NAME = "Proud Duck"
 
@@ -54,10 +55,15 @@ def get_betting_amount(game_state, rank):
     if our_potential_bet < current_buy_in:
         return 0
 
-    return our_potential_bet
+    n = randint(0, 100)
+
+    if n > 40:
+        our_potential_bet = BETTING_STRATEGY[rank * 2] / 100 * our_stack
+    else:
+        return our_potential_bet
 
 class Player:
-    VERSION = "0.14"
+    VERSION = "0.15"
 
     def betRequest(self, game_state):
         print("Game state: ", game_state)
