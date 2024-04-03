@@ -1,10 +1,59 @@
+from ranker import rank_hand
+
+def get_our_cards(game_state):
+    for player in game_state["players"]:
+        if player["name"] == game_state["Proud Duck"]:
+            return player["hole_cards"]
+    return []
+
+def get_our_stack(game_state):
+    for player in game_state["players"]:
+        if player["name"] == game_state["Proud Duck"]:
+            return player["stack"]
+    return 0
+
+def get_table_cards(game_state):
+    return game_state["community_cards"]
+
+def get_current_buy_in(game_state):
+    return game_state["current_buy_in"]
+
+def get_whole_hans(our_cards, table_cards):
+    return our_cards + table_cards
+
+BETTING_STRATEGY = {
+        0: 0,
+        1: 10,
+        2: 20,
+        3: 30,
+        4: 40,
+        5: 50,
+        6: 60,
+        7: 70,
+        8: 80
+    }
+
+def get_betting_amount(game_state, rank):
+    # If we have a bad hand, we fold
+    current_buy_in = get_current_buy_in(game_state)
+    if current_buy_in > get_our_stack(game_state):
+        return 0
+
+    # If we have a good hand, we go all in
+    our_stack = get_our_stack(game_state)
+    our_potential_bet = BETTING_STRATEGY[rank] / 100 * our_stack
+
+    if our_potential_bet < current_buy_in:
+        return 0
+
+    return our_potential_bet
 
 class Player:
-    VERSION = "Default Python folding player"
+    VERSION = "0.1"
 
     def betRequest(self, game_state):
-        return 0
+        rank = rank_hand(get_whole_hans(get_our_cards(game_state), get_table_cards(game_state)))
+        return get_betting_amount(game_state, rank)
 
     def showdown(self, game_state):
         pass
-
