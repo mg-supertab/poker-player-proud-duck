@@ -41,6 +41,9 @@ def get_betting_amount(game_state, rank):
     current_buy_in = get_current_buy_in(game_state)
     if current_buy_in > get_our_stack(game_state):
         return 0
+    
+    if get_total_number_of_cards(game_state) < 4:
+        return current_buy_in
 
     # If we have a good hand, we go all in
     our_stack = get_our_stack(game_state)
@@ -49,13 +52,10 @@ def get_betting_amount(game_state, rank):
     if our_potential_bet < current_buy_in:
         return 0
 
-    if get_total_number_of_cards(game_state) < 4:
-        return current_buy_in
-
     return our_potential_bet
 
 class Player:
-    VERSION = "0.5"
+    VERSION = "0.6"
 
     def betRequest(self, game_state):
         rank = rank_hand(get_whole_hans(get_our_cards(game_state), get_table_cards(game_state)))
