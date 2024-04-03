@@ -1,14 +1,16 @@
 from ranker import rank_hand
 
+TEAM_NAME = "Proud Duck"
+
 def get_our_cards(game_state):
     for player in game_state["players"]:
-        if player["name"] == game_state["Proud Duck"]:
+        if player["name"] == TEAM_NAME:
             return player["hole_cards"]
     return []
 
 def get_our_stack(game_state):
     for player in game_state["players"]:
-        if player["name"] == game_state["Proud Duck"]:
+        if player["name"] == TEAM_NAME:
             return player["stack"]
     return 0
 
@@ -55,13 +57,13 @@ def get_betting_amount(game_state, rank):
     return our_potential_bet
 
 class Player:
-    VERSION = "0.9"
+    VERSION = "0.10"
 
     def betRequest(self, game_state):
         print("Game state: ", game_state)
-        # rank = rank_hand(get_whole_hans(get_our_cards(game_state), get_table_cards(game_state)))
-        # return get_betting_amount(game_state, rank)
-        return 0
+        rank = rank_hand(get_whole_hans(get_our_cards(game_state), get_table_cards(game_state)))
+        return get_betting_amount(game_state, rank)
+        # return 0
 
     def showdown(self, game_state):
         pass
