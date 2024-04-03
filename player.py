@@ -75,13 +75,13 @@ def get_betting_amount(game_state, rank):
         return current_buy_in
 
 class Player:
-    VERSION = "0.20"
+    VERSION = "0.21"
 
     def betRequest(self, game_state):
-        print("Game state: ", game_state)
-        rank, _ = rank_hand(get_whole_hans(get_our_cards(game_state), get_table_cards(game_state)))
-        return get_betting_amount(game_state, rank)
-        # return 0
+        # print("Game state: ", game_state)
+        # rank, _ = rank_hand(get_whole_hans(get_our_cards(game_state), get_table_cards(game_state)))
+        # return get_betting_amount(game_state, rank)
+        return 0
 
     def showdown(self, game_state):
         pass
